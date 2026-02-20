@@ -1608,3 +1608,8 @@ export default function App() {
     </div>
   );
 }
+// Add this at the very bottom of your index.tsx file
+import { createRoot } from 'react-dom/client';
+const container = document.getElementById('root');
+const root = createRoot(container!);
+root.render(<App />);
