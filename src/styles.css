@@ -1,0 +1,41 @@
+body {
+  margin: 0;
+  background: #09090b;
+  font-family: system-ui, sans-serif;
+  color: white;
+}
+
+/* App container */
+.app {
+  max-width: 420px;
+  margin: auto;
+  min-height: 100vh;
+  padding: 16px;
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .app {
+    max-width: 1200px;
+  }
+
+  .layout {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 24px;
+  }
+
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 80px;
+    height: 100vh;
+    background: #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    gap: 20px;
+  }
+}
