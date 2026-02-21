@@ -1,146 +1,131 @@
 import React, { useState } from "react";
 import { createRoot } from "react-dom/client";
 import { 
-  Search, Menu, X, Bell, User, Star, Clock, 
-  MapPin, Calendar, ChevronRight, Play, ShoppingBag, 
-  Plus, Minus, Trash2, CheckCircle2, CreditCard,
-  Film, Map as MapIcon, Gamepad2, Utensils,
-  History, Settings, Heart, MessageSquare, Users,
-  Info, Shield, Phone, Mail, Instagram, Twitter, Facebook
+  Search, Menu, Bell, User, Star, Clock, 
+  ChevronRight, Play, ShoppingBag, Plus,
+  Film, Map as MapIcon, Gamepad2, Utensils, Home, Ticket
 } from "lucide-react";
 
-// ── 1. DATA ──
 const LOGO_URL = "https://i.postimg.cc/d0pZcWFK/Whats-App-Image-2026-02-20-at-11-20-53-PM.jpg";
 
-const movies = [
-  { id:1, title:"Taqdeer", sub:"Divine Decree", genre:"Drama", duration:"2h 10m", lang:"Hausa / English", rating:4.7, badge:"FEATURED", badgeColor:"#a855f7", gradient:"linear-gradient(135deg,#1a0533,#4a0080,#6b00cc)", posterLetter:"T", showtimes:[{time:"14:00",type:"Standard"},{time:"17:30",type:"VIP"},{time:"20:00",type:"Standard"}], price:2000 },
-  { id:2, title:"Hakeem", sub:"Seeking Justice", genre:"Action", duration:"1h 58m", lang:"English", rating:4.6, badge:"BLOCKBUSTER", badgeColor:"#f97316", gradient:"linear-gradient(135deg,#0f0c29,#302b63,#1a1a4e)", posterLetter:"H", showtimes:[{time:"15:30",type:"IMAX"},{time:"18:00",type:"Standard"}], price:2000 }
-];
-
-const snackItems = [
-  { id:"sp", name:"Popcorn", desc:"Large Salted", price:2500, icon:"🍿" },
-  { id:"bb", name:"Beef Burger", desc:"Double Cheese", price:4500, icon:"🍔" },
-  { id:"sl", name:"Slushie", desc:"Blue Raspberry", price:1500, icon:"🥤" }
-];
-
-// ── 2. LOGO COMPONENT ──
-function GKLogo({ size = 36 }) {
-  return (
-    <div style={{width:size,height:size,borderRadius:size*0.22,overflow:"hidden",background:"white",display:"flex",alignItems:"center",justifyContent:"center"}}>
-      <img src={LOGO_URL} style={{width:"90%",height:"90%",objectFit:"contain"}} alt="GK" />
-    </div>
-  );
-}
-
-// ── 3. MAIN APP ──
 export default function App() {
   const [page, setPage] = useState("home");
 
-  const renderContent = () => {
-    // THIS PART HANDLES THE PAGE SWITCHING
-    if (page === "home") {
-      return (
-        <div className="p-4">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold">Now Showing</h2>
-            <div className="text-yellow-500 text-sm font-semibold flex items-center gap-1">View All <ChevronRight size={16} /></div>
-          </div>
-          <div className="space-y-6">
-            {movies.map(movie => (
-              <div key={movie.id} className="bg-[#111] rounded-2xl overflow-hidden border border-white/5 shadow-2xl">
-                <div className="h-48 relative flex items-center justify-center" style={{ background: movie.gradient }}>
-                  <span className="text-7xl font-black text-white/20">{movie.posterLetter}</span>
-                  <div className="absolute top-4 left-4"><span className="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider" style={{ background: movie.badgeColor }}>{movie.badge}</span></div>
-                  <div className="absolute bottom-4 right-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg flex items-center gap-1"><Star size={12} className="text-yellow-500 fill-yellow-500" /><span>{movie.rating}</span></div>
-                </div>
-                <div className="p-5">
-                  <h3 className="text-xl font-bold">{movie.title}</h3>
-                  <p className="text-gray-400 text-sm mb-4">{movie.genre} • {movie.duration}</p>
-                  <button className="w-full bg-yellow-500 text-black font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-95"><Play size={18} fill="black" /> Book Tickets</button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      );
-    }
-
-    if (page === "turf") {
-      return (
-        <div className="p-10 text-center animate-in fade-in duration-500">
-          <div className="w-24 h-24 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
-            <MapIcon size={48} className="text-green-500" />
-          </div>
-          <h2 className="text-3xl font-bold mb-3">Turf Booking</h2>
-          <p className="text-gray-400 mb-8">Reserve the Gidan Kallo Football Turf for your next match.</p>
-          <button className="bg-green-500 text-black font-black px-10 py-4 rounded-2xl shadow-lg shadow-green-500/20">Check Slots</button>
-        </div>
-      );
-    }
-
-    if (page === "food") {
-      return (
-        <div className="p-4 animate-in fade-in duration-500">
-          <h2 className="text-2xl font-bold mb-6">Cinema Snacks</h2>
-          <div className="grid gap-4">
-            {snackItems.map(item => (
-              <div key={item.id} className="bg-[#111] p-5 rounded-2xl border border-white/5 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="text-4xl bg-white/5 w-14 h-14 rounded-2xl flex items-center justify-center">{item.icon}</div>
-                  <div><h4 className="font-bold text-lg">{item.name}</h4><p className="text-sm text-yellow-500 font-bold">₦{item.price}</p></div>
-                </div>
-                <button className="bg-white/10 p-3 rounded-xl hover:bg-yellow-500 transition-colors"><Plus size={24} /></button>
-              </div>
-            ))}
-          </div>
-        </div>
-      );
-    }
-
-    return (
-      <div className="p-20 text-center">
-        <Gamepad2 size={64} className="mx-auto text-blue-500 mb-4" />
-        <h2 className="text-2xl font-bold">Games Zone</h2>
-        <p className="text-gray-400 mt-2">VR & Console bookings coming soon.</p>
-        <button onClick={() => setPage("home")} className="text-yellow-500 mt-6 font-bold">Back to Movies</button>
-      </div>
-    );
-  };
-
   return (
-    <div className="min-h-screen bg-black text-white font-sans pb-28">
-      {/* TOP HEADER */}
-      <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10 px-4 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3" onClick={() => setPage("home")}>
-          <GKLogo size={38} />
-          <span className="text-2xl font-black tracking-tighter">Gidan Kallo</span>
+    <div className="min-h-screen bg-[#0a0a0a] text-white font-sans pb-24">
+      {/* HEADER */}
+      <header className="p-5 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="w-12 h-12 rounded-xl border-2 border-yellow-500 overflow-hidden bg-white flex items-center justify-center">
+            <img src={LOGO_URL} className="w-10 h-10 object-contain" alt="Logo" />
+          </div>
+          <div>
+            <p className="text-[10px] text-gray-500 font-bold uppercase tracking-widest">Welcome Back</p>
+            <h1 className="text-xl font-black text-yellow-500">Gidan Kallo</h1>
+          </div>
         </div>
-        <div className="bg-white/5 p-2 rounded-full"><Menu size={24} /></div>
-      </nav>
+        <div className="flex gap-2">
+          <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-xs font-bold">HA</div>
+          <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center text-yellow-500"><Bell size={20} fill="currentColor" /></div>
+        </div>
+      </header>
 
-      {/* DYNAMIC CONTENT */}
-      {renderContent()}
+      {/* FEATURED MOVIE CARD */}
+      <div className="px-5 mb-8">
+        <div className="relative h-64 rounded-[32px] overflow-hidden bg-gradient-to-br from-[#1a0533] to-[#6b00cc] p-6 flex flex-col justify-end border border-white/10">
+          <div className="absolute top-6 left-6 bg-black/40 backdrop-blur-md px-3 py-1 rounded-full flex items-center gap-2 border border-white/10">
+             <div className="w-4 h-4 rounded-md bg-yellow-500 flex items-center justify-center text-[8px] font-black text-black">GK</div>
+             <span className="text-[10px] font-bold tracking-widest uppercase">Gidan Kallo</span>
+          </div>
+          <div className="absolute top-6 right-6 bg-purple-500/50 backdrop-blur-md px-4 py-1 rounded-lg text-[10px] font-black uppercase">Featured</div>
+          
+          <span className="absolute right-[-20px] top-10 text-[180px] font-black text-white/5 pointer-events-none">T</span>
 
-      {/* BOTTOM NAV BAR */}
-      <div className="fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-2xl border-t border-white/10 px-8 py-5 flex justify-between items-center z-50">
-        <button onClick={() => setPage("home")} className={`flex flex-col items-center gap-1 transition-all ${page === "home" ? "text-yellow-500 scale-110" : "text-gray-500"}`}>
-          <Film size={24} /><span className="text-[10px] font-black uppercase tracking-widest">Cinema</span>
+          <h2 className="text-4xl font-black mb-1">Taqdeer</h2>
+          <div className="flex items-center gap-2 mb-6">
+            <div className="flex text-yellow-500"><Star size={14} fill="currentColor"/><Star size={14} fill="currentColor"/><Star size={14} fill="currentColor"/><Star size={14} fill="currentColor"/><Star size={14} className="opacity-30"/></div>
+            <span className="text-xs text-gray-300 font-medium">• 2h 10m • Drama</span>
+          </div>
+          
+          <button className="w-full bg-white text-black font-black py-4 rounded-2xl flex items-center justify-center gap-2 shadow-xl active:scale-95 transition-transform">
+            <Ticket size={20} fill="black" /> Get Tickets
+          </button>
+        </div>
+      </div>
+
+      {/* QUICK ACCESS */}
+      <div className="px-5 mb-8">
+        <h3 className="text-lg font-black mb-4">Quick Access</h3>
+        <div className="grid grid-cols-4 gap-3">
+          {[
+            { id: 'cinema', name: 'Cinema', icon: <Film />, color: 'purple' },
+            { id: 'turf', name: 'Turf', icon: <MapIcon />, color: 'blue' },
+            { id: 'games', name: 'Games', icon: <Gamepad2 />, color: 'indigo' },
+            { id: 'food', name: 'Food', icon: <Utensils />, color: 'orange' }
+          ].map(item => (
+            <button key={item.id} onClick={() => setPage(item.id)} className="flex flex-col items-center gap-2">
+              <div className="w-full aspect-square bg-white/5 rounded-2xl border border-white/5 flex items-center justify-center text-gray-400">
+                {item.icon}
+              </div>
+              <span className="text-[10px] font-bold text-gray-500">{item.name}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* THE ARENA */}
+      <div className="px-5">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="text-lg font-black">The Arena</h3>
+          <button className="text-green-500 text-[10px] font-black uppercase tracking-widest">Book Pitch</button>
+        </div>
+        <div className="grid grid-cols-2 gap-4">
+           <div className="bg-[#111] rounded-[24px] overflow-hidden border border-white/5">
+              <div className="h-28 bg-gradient-to-br from-green-900 to-green-600 p-4 relative">
+                <MapIcon className="absolute right-2 bottom-2 text-white/10" size={60} />
+                <div className="bg-black/40 backdrop-blur-md px-2 py-1 rounded-full inline-flex items-center gap-1">
+                  <div className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></div>
+                  <span className="text-[8px] font-black uppercase">Available Now</span>
+                </div>
+              </div>
+              <div className="p-4">
+                <h4 className="font-bold text-sm">5-a-Side Turf A</h4>
+              </div>
+           </div>
+           <div className="bg-[#111] rounded-[24px] overflow-hidden border border-white/5 opacity-60">
+              <div className="h-28 bg-gradient-to-br from-orange-900 to-orange-600 p-4">
+                <div className="bg-orange-500 px-2 py-1 rounded-md inline-block text-[8px] font-black uppercase">Tournament</div>
+              </div>
+              <div className="p-4">
+                <h4 className="font-bold text-sm">Weekend League</h4>
+              </div>
+           </div>
+        </div>
+      </div>
+
+      {/* NAVIGATION BAR */}
+      <div className="fixed bottom-0 left-0 right-0 bg-black/80 backdrop-blur-2xl border-t border-white/5 px-6 py-4 flex justify-between items-center z-50">
+        <button onClick={() => setPage('home')} className={`flex flex-col items-center gap-1 ${page === 'home' ? 'text-yellow-500' : 'text-gray-600'}`}>
+          <Home size={22} fill={page === 'home' ? 'currentColor' : 'none'} />
+          <span className="text-[9px] font-black uppercase">Home</span>
         </button>
-        <button onClick={() => setPage("turf")} className={`flex flex-col items-center gap-1 transition-all ${page === "turf" ? "text-yellow-500 scale-110" : "text-gray-500"}`}>
-          <MapIcon size={24} /><span className="text-[10px] font-black uppercase tracking-widest">Turf</span>
+        <button onClick={() => setPage('cinema')} className="flex flex-col items-center gap-1 text-gray-600">
+          <Film size={22} /><span className="text-[9px] font-black uppercase">Cinema</span>
         </button>
-        <button onClick={() => setPage("games")} className={`flex flex-col items-center gap-1 transition-all ${page === "games" ? "text-yellow-500 scale-110" : "text-gray-500"}`}>
-          <Gamepad2 size={24} /><span className="text-[10px] font-black uppercase tracking-widest">Games</span>
+        <button onClick={() => setPage('turf')} className="flex flex-col items-center gap-1 text-gray-600">
+          <MapIcon size={22} /><span className="text-[9px] font-black uppercase">Turf</span>
         </button>
-        <button onClick={() => setPage("food")} className={`flex flex-col items-center gap-1 transition-all ${page === "food" ? "text-yellow-500 scale-110" : "text-gray-500"}`}>
-          <Utensils size={24} /><span className="text-[10px] font-black uppercase tracking-widest">Food</span>
+        <button onClick={() => setPage('games')} className="flex flex-col items-center gap-1 text-gray-600">
+          <Gamepad2 size={22} /><span className="text-[9px] font-black uppercase">Games</span>
+        </button>
+        <button onClick={() => setPage('food')} className="flex flex-col items-center gap-1 text-gray-600">
+          <Utensils size={22} /><span className="text-[9px] font-black uppercase">Food</span>
         </button>
       </div>
     </div>
   );
 }
 
-// ── 4. FINAL RENDER GLUE ──
 const container = document.getElementById('root');
 if (container) {
   const root = createRoot(container);
