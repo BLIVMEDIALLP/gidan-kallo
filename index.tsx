@@ -37,6 +37,7 @@ export default function App() {
   const [page, setPage] = useState("home");
 
   const renderContent = () => {
+    // THIS PART HANDLES THE PAGE SWITCHING
     if (page === "home") {
       return (
         <div className="p-4">
@@ -55,7 +56,7 @@ export default function App() {
                 <div className="p-5">
                   <h3 className="text-xl font-bold">{movie.title}</h3>
                   <p className="text-gray-400 text-sm mb-4">{movie.genre} • {movie.duration}</p>
-                  <button className="w-full bg-yellow-500 text-black font-bold py-3 rounded-xl flex items-center justify-center gap-2"><Play size={18} fill="black" /> Book Tickets</button>
+                  <button className="w-full bg-yellow-500 text-black font-bold py-3 rounded-xl flex items-center justify-center gap-2 transition-transform active:scale-95"><Play size={18} fill="black" /> Book Tickets</button>
                 </div>
               </div>
             ))}
@@ -66,29 +67,29 @@ export default function App() {
 
     if (page === "turf") {
       return (
-        <div className="p-6 text-center">
-          <div className="w-20 h-20 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-            <MapIcon size={40} className="text-green-500" />
+        <div className="p-10 text-center animate-in fade-in duration-500">
+          <div className="w-24 h-24 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <MapIcon size={48} className="text-green-500" />
           </div>
-          <h2 className="text-2xl font-bold mb-2">Turf Booking</h2>
-          <p className="text-gray-400">Reserve your football slot at Gidan Kallo Turf.</p>
-          <button className="mt-6 bg-green-500 text-black font-bold px-8 py-3 rounded-xl">Check Availability</button>
+          <h2 className="text-3xl font-bold mb-3">Turf Booking</h2>
+          <p className="text-gray-400 mb-8">Reserve the Gidan Kallo Football Turf for your next match.</p>
+          <button className="bg-green-500 text-black font-black px-10 py-4 rounded-2xl shadow-lg shadow-green-500/20">Check Slots</button>
         </div>
       );
     }
 
     if (page === "food") {
       return (
-        <div className="p-4">
+        <div className="p-4 animate-in fade-in duration-500">
           <h2 className="text-2xl font-bold mb-6">Cinema Snacks</h2>
           <div className="grid gap-4">
             {snackItems.map(item => (
-              <div key={item.id} className="bg-[#111] p-4 rounded-2xl border border-white/5 flex items-center justify-between">
+              <div key={item.id} className="bg-[#111] p-5 rounded-2xl border border-white/5 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="text-3xl bg-white/5 w-12 h-12 rounded-xl flex items-center justify-center">{item.icon}</div>
-                  <div><h4 className="font-bold">{item.name}</h4><p className="text-xs text-gray-500">₦{item.price}</p></div>
+                  <div className="text-4xl bg-white/5 w-14 h-14 rounded-2xl flex items-center justify-center">{item.icon}</div>
+                  <div><h4 className="font-bold text-lg">{item.name}</h4><p className="text-sm text-yellow-500 font-bold">₦{item.price}</p></div>
                 </div>
-                <button className="bg-white/10 p-2 rounded-lg hover:bg-yellow-500 transition-colors"><Plus size={20} /></button>
+                <button className="bg-white/10 p-3 rounded-xl hover:bg-yellow-500 transition-colors"><Plus size={24} /></button>
               </div>
             ))}
           </div>
@@ -98,43 +99,48 @@ export default function App() {
 
     return (
       <div className="p-20 text-center">
-        <h2 className="text-xl font-bold">Coming Soon</h2>
-        <button onClick={() => setPage("home")} className="text-yellow-500 mt-4">Go Back</button>
+        <Gamepad2 size={64} className="mx-auto text-blue-500 mb-4" />
+        <h2 className="text-2xl font-bold">Games Zone</h2>
+        <p className="text-gray-400 mt-2">VR & Console bookings coming soon.</p>
+        <button onClick={() => setPage("home")} className="text-yellow-500 mt-6 font-bold">Back to Movies</button>
       </div>
     );
   };
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans pb-24">
-      <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10 px-4 py-3 flex items-center justify-between">
+    <div className="min-h-screen bg-black text-white font-sans pb-28">
+      {/* TOP HEADER */}
+      <nav className="sticky top-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10 px-4 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3" onClick={() => setPage("home")}>
-          <GKLogo size={36} />
-          <span className="text-xl font-bold tracking-tight">Gidan Kallo</span>
+          <GKLogo size={38} />
+          <span className="text-2xl font-black tracking-tighter">Gidan Kallo</span>
         </div>
-        <Menu size={24} />
+        <div className="bg-white/5 p-2 rounded-full"><Menu size={24} /></div>
       </nav>
 
+      {/* DYNAMIC CONTENT */}
       {renderContent()}
 
-      <div className="fixed bottom-0 left-0 right-0 bg-black/90 backdrop-blur-xl border-t border-white/10 px-6 py-4 flex justify-between items-center z-50">
-        <button onClick={() => setPage("home")} className={`flex flex-col items-center gap-1 ${page === "home" ? "text-yellow-500" : "text-gray-500"}`}>
-          <Film size={22} /><span className="text-[10px] font-bold">Cinema</span>
+      {/* BOTTOM NAV BAR */}
+      <div className="fixed bottom-0 left-0 right-0 bg-black/95 backdrop-blur-2xl border-t border-white/10 px-8 py-5 flex justify-between items-center z-50">
+        <button onClick={() => setPage("home")} className={`flex flex-col items-center gap-1 transition-all ${page === "home" ? "text-yellow-500 scale-110" : "text-gray-500"}`}>
+          <Film size={24} /><span className="text-[10px] font-black uppercase tracking-widest">Cinema</span>
         </button>
-        <button onClick={() => setPage("turf")} className={`flex flex-col items-center gap-1 ${page === "turf" ? "text-yellow-500" : "text-gray-500"}`}>
-          <MapIcon size={22} /><span className="text-[10px] font-bold">Turf</span>
+        <button onClick={() => setPage("turf")} className={`flex flex-col items-center gap-1 transition-all ${page === "turf" ? "text-yellow-500 scale-110" : "text-gray-500"}`}>
+          <MapIcon size={24} /><span className="text-[10px] font-black uppercase tracking-widest">Turf</span>
         </button>
-        <button onClick={() => setPage("games")} className={`flex flex-col items-center gap-1 ${page === "games" ? "text-yellow-500" : "text-gray-500"}`}>
-          <Gamepad2 size={22} /><span className="text-[10px] font-bold">Games</span>
+        <button onClick={() => setPage("games")} className={`flex flex-col items-center gap-1 transition-all ${page === "games" ? "text-yellow-500 scale-110" : "text-gray-500"}`}>
+          <Gamepad2 size={24} /><span className="text-[10px] font-black uppercase tracking-widest">Games</span>
         </button>
-        <button onClick={() => setPage("food")} className={`flex flex-col items-center gap-1 ${page === "food" ? "text-yellow-500" : "text-gray-500"}`}>
-          <Utensils size={22} /><span className="text-[10px] font-bold">Food</span>
+        <button onClick={() => setPage("food")} className={`flex flex-col items-center gap-1 transition-all ${page === "food" ? "text-yellow-500 scale-110" : "text-gray-500"}`}>
+          <Utensils size={24} /><span className="text-[10px] font-black uppercase tracking-widest">Food</span>
         </button>
       </div>
     </div>
   );
 }
 
-// ── 4. RENDER GLUE ──
+// ── 4. FINAL RENDER GLUE ──
 const container = document.getElementById('root');
 if (container) {
   const root = createRoot(container);
